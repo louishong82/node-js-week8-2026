@@ -1,5 +1,9 @@
 require('dotenv').config()
-const { DataSource } = require('typeorm')
+const { DataSource } = require('typeorm');
+const eclass = require('../entities/Class');
+const grade = require('../entities/Grade');
+const student = require('../entities/Student');
+const subject = require('../entities/Subject');
 
 // ============================================================
 // TODO：把你設計的 entity require 進來，然後加進下方的 entities 陣列
@@ -19,6 +23,7 @@ const dataSource = new DataSource({
 
   entities: [
     // TODO: 你的 entities
+    eclass,grade,student,subject
   ],
   migrations: ['db/migrations/*.js'],
 })

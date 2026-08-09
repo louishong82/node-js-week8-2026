@@ -30,6 +30,66 @@ async function main() {
   //     （TypeORM 會自動取出它的 id 填進外鍵），寫法範例：
   //      courseRepo.save({ name: '...', user: 教練物件, skill: 技能物件 })
   // ======================================================================
+  const courseRepo = dataSource.getRepository('Course')
+  const userRepo = dataSource.getRepository('User')
+  const skillRepo = dataSource.getRepository('Skill')
+
+  const [weightTraining, yoga , cycling] = await skillRepo.save([
+    {name:'重訓'},
+    {name:'瑜珈'},
+    {name:'飛輪'}
+  ])
+
+  const [coach1,coach2]=await userRepo.save([
+    {
+      name:'海格教練',
+      email:'coach1@livefit.tw',
+      role:'COACH',
+    },
+    {
+      name:'小美教練',
+      email:'coach2@livefit.tw',
+      role:'COACH',
+    }
+  ])
+  await courseRepo.save([
+    {
+      name:'肌力入門班',
+      description:'適合新手的基礎訓練課程，教你正確姿勢與肌肉的運用',
+      start_at:'2026-08-12 18:00:00',
+      end_at:'2026-08-12 19:00:00',
+      max_participants:8,
+      user:coach1,
+      skill:weightTraining
+    },
+    {
+      name:'週末飛輪',
+      description:'高速有氧，揮灑汗水',
+      start_at:'2026-08-12 19:00:00',
+      end_at:'2026-08-12 20:00:00',
+      max_participants:22,
+      user:coach2,
+      skill:cycling
+    },
+    {
+      name:'晨間瑜珈',
+      description:'喚醒身體的晨間伸展與呼吸練習',
+      start_at:'2026-08-12 06:00:00',
+      end_at:'2026-08-12 07:00:00',
+      max_participants:5,
+      user:coach2,
+      skill:yoga
+    },
+    {
+      name:'核心特訓',
+      description:'針對核心肌群加強訓練',
+      start_at:'2026-08-12 21:00:00',
+      end_at:'2026-08-12 22:00:00',
+      max_participants:12,
+      user:coach1,
+      skill:weightTraining
+    }
+  ])
 
   console.log('🌱 seed 完成')
   await dataSource.destroy()

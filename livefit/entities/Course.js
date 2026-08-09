@@ -39,6 +39,11 @@ module.exports = new EntitySchema({
             type:'timestamp',
             updateDate:true,
             nullable:false
+        },
+        meeting_url:{
+            type:'varchar',
+            length:2048,
+            nullable:true
         }
     },
     relations:{
